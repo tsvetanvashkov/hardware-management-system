@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hardware Management System</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<header th:fragment="header">
+  <nav>
+<!--    <div class="home">-->
+<!--      <a href="/">Paintings Collectors App</a>-->
+<!--      <a href="/" th:if="${user}" th:href="@{/paintings/new}">Add Painting</a>-->
+<!--    </div>-->
+    <div class="links">
+      <li th:unless="${user}">
+        <a th:href="@{/login}">Login</a>
+      </li>
+      <li th:unless="${user}">
+        <a th:href="@{/register}">Register</a>
+      </li>
+      <li th:if="${user}">
+        <a th:href="@{/logout}">Logout</a>
+      </li>
+    </div>
+  </nav>
+</header>
+
+<footer th:fragment="footer">
+  <p>&copy; 2025 Hardware Management System</p>
+</footer>
+
+</body>
+</html>

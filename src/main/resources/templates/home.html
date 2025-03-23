@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/commons :: head}"></head>
+<body>
+    <header th:replace="~{fragments/commons :: header}"></header>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <!-- Show Buttons Only for ADMIN -->
+            <div>
+                <span>Admin</span>
+                <a th:href="@{/admin/add-user}">Add User</a>
+                <a href="/admin">All Users</a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <h1>Home Page</h1>
+        </main>
+    </div>
+    <footer th:replace="~{fragments/commons :: footer}"></footer>
+</body>
+</html>
