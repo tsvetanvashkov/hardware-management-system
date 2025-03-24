@@ -296,3 +296,91 @@ footer {
     position: relative;
     width: 100%;
 }
+
+/* Sidebar & Layout */
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background: #333;
+    color: white;
+    padding: 20px;
+    position: relative;
+    min-height: calc(100vh - 60px);
+}
+
+/* Content Section */
+.content {
+    margin-left: 250px;
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: calc(100vh - 60px);
+}
+
+/* Form Styling */
+.project-form {
+    width: 50%;
+    max-width: 500px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.project-form label {
+    width: 100%;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.project-form input,
+.project-form textarea,
+.project-form select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.project-form textarea {
+    resize: none;
+}
+
+.project-form .submit-btn {
+    background-color: #ff9800;
+    color: white;
+    padding: 10px;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    margin-top: 15px;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.project-form .submit-btn:hover {
+    background-color: #e68900;
+}
+
+/* Footer */
+footer {
+    height: 60px;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: relative;
+    width: 100%;
+}
