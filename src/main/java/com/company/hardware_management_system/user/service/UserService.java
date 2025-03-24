@@ -3,7 +3,6 @@ package com.company.hardware_management_system.user.service;
 import com.company.hardware_management_system.exception.DomainException;
 import com.company.hardware_management_system.security.AuthenticationMetadata;
 import com.company.hardware_management_system.user.model.User;
-import com.company.hardware_management_system.user.model.UserRole;
 import com.company.hardware_management_system.user.repository.UserRepository;
 import com.company.hardware_management_system.web.dto.AddUserRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -71,9 +70,22 @@ public class UserService implements UserDetailsService {
         return userRepository.findById(id).orElseThrow(() -> new DomainException("User with id [%s] does not exist.".formatted(id)));
     }
 
-    //@Cacheable("users")
     public List<User> getAllUsers() {
 
         return userRepository.findAll();
+    }
+
+    public String getEmailBodyForCreatedUser(AddUserRequest addUserRequest) {
+        StringBuilder body = new StringBuilder();
+        body.append("Your account in Hardware Management System was created!");
+        body.append(System.lineSeparator());
+        body.append(("You can log in from link: "));
+        body.append("http://localhost:8080/login");
+        body.append(System.lineSeparator());
+        body.append("Username: %s".formatted(addUserRequest.getUsername()));
+        body.append(System.lineSeparator());
+        body.append("Password: %s".formatted(addUserRequest.getPassword()));
+
+        return body.toString();
     }
 }

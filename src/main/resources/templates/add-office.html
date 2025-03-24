@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/commons :: head}"></head>
+<!-- Link to external CSS -->
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<body>
+<header th:replace="~{fragments/commons :: header}"></header>
+
+<div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <a href="/home">Home</a>
+        <a href="/offices">All Offices</a>
+        <a href="/logout" class="logout-btn">Logout</a>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content">
+        <h1>Add New Office</h1>
+
+        <form class="office-form" th:action="@{/admin/add-office}" th:method="POST" th:object="${addOfficeRequest}">
+            <label for="name">Office Name:</label>
+            <input type="text" id="name" th:field="*{name}" placeholder="Enter office name">
+            <p class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+
+            <label for="location">Location:</label>
+            <input type="text" id="location" th:field="*{location}" placeholder="Enter office location">
+            <p class="error" th:if="${#fields.hasErrors('location')}" th:errors="*{location}"></p>
+
+            <button type="submit" class="submit-btn">Register Office</button>
+        </form>
+    </main>
+</div>
+
+<footer th:replace="~{fragments/commons :: footer}"></footer>
+</body>
+</html>

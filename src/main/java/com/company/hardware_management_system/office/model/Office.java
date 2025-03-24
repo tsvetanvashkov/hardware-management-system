@@ -27,8 +27,7 @@ public class Office {
     private String name;
 
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Locations locations;
+    private String location;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "office_department")

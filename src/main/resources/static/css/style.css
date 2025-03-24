@@ -120,3 +120,179 @@ footer {
     padding: 20px;
     text-align: center;
 }
+/* Office Form (Same styling as User Form) */
+.office-form {
+    width: 50%;
+    margin: auto;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.office-form label {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.office-form input {
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.office-form .submit-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    margin-top: 15px;
+    border-radius: 5px;
+}
+
+.office-form .submit-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Center Content */
+.content {
+    flex: 1;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Department Form (Same styling as User & Office Forms) */
+.department-form {
+    width: 50%;
+    margin: auto;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.department-form label {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.department-form input {
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.department-form .submit-btn {
+    background-color: #ff9800;
+    color: white;
+    padding: 10px;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    margin-top: 15px;
+    border-radius: 5px;
+}
+
+.department-form .submit-btn:hover {
+    background-color: #e68900;
+}
+
+/* Center Content */
+.content {
+    flex: 1;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Ensure full-page layout with sidebar and footer alignment */
+.container {
+    display: flex;
+    min-height: 100vh; /* Ensure the container stretches to full viewport height */
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background: #333;
+    color: white;
+    padding: 20px;
+    position: relative;
+    min-height: calc(100vh - 60px); /* Adjust based on footer height */
+}
+
+/* Content Area */
+.content {
+    margin-left: 250px; /* Adjust based on sidebar width */
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: calc(100vh - 60px); /* Ensure content area accounts for footer */
+}
+
+/* Form Styling */
+.user-form {
+    width: 50%;
+    max-width: 500px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user-form label {
+    width: 100%;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.user-form input,
+.user-form select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.user-form .submit-btn {
+    background-color: #ff9800;
+    color: white;
+    padding: 10px;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    margin-top: 15px;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.user-form .submit-btn:hover {
+    background-color: #e68900;
+}
+
+/* Footer */
+footer {
+    height: 60px; /* Set a fixed height for the footer */
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: relative;
+    width: 100%;
+}

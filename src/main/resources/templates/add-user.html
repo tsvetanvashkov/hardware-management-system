@@ -33,17 +33,21 @@
 
       <label for="role">Role:</label>
       <select id="role" th:field="*{userRole}">
-        <option value="USER">User</option>
-        <option value="ADMIN">Admin</option>
+        <option th:each="role : ${T(com.company.hardware_management_system.user.model.UserRole).values()}" th:value="${role}" th:text="${#strings.capitalize(#strings.toLowerCase(role))}"></option>
       </select>
 
       <label for="office">Office:</label>
-      <input type="text" id="office" th:field="*{office}" placeholder="Enter office location">
-      <p class="error" th:if="${#fields.hasErrors('office')}" th:errors="*{office}"></p>
+      <select id="office" th:field="*{office}">
+        <option value="">Select Office</option>
+        <option th:each="office : ${offices}" th:value="${office.id}" th:text="${office.name}"></option>
+      </select>
 
       <label for="department">Department:</label>
-      <input type="text" id="department" th:field="*{department}" placeholder="Enter department">
-      <p class="error" th:if="${#fields.hasErrors('department')}" th:errors="*{department}"></p>
+      <select id="department" th:field="*{department}">
+        <option value="">Select Department</option>
+        <option th:each="department : ${departments}" th:value="${department.id}" th:text="${department.name}"></option>
+      </select>
+
 
       <button type="submit" class="submit-btn">Add User</button>
     </form>
