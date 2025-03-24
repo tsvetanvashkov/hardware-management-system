@@ -7,12 +7,16 @@ import com.company.hardware_management_system.notification.service.NotificationS
 import com.company.hardware_management_system.office.model.Office;
 import com.company.hardware_management_system.office.repository.OfficeRepository;
 import com.company.hardware_management_system.office.service.OfficeService;
+import com.company.hardware_management_system.project.model.Project;
+import com.company.hardware_management_system.project.repository.ProjectRepository;
+import com.company.hardware_management_system.project.service.ProjectService;
 import com.company.hardware_management_system.security.AuthenticationMetadata;
 import com.company.hardware_management_system.user.model.User;
 import com.company.hardware_management_system.user.repository.UserRepository;
 import com.company.hardware_management_system.user.service.UserService;
 import com.company.hardware_management_system.web.dto.AddDepartmentRequest;
 import com.company.hardware_management_system.web.dto.AddOfficeRequest;
+import com.company.hardware_management_system.web.dto.AddProjectRequest;
 import com.company.hardware_management_system.web.dto.AddUserRequest;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -40,9 +44,12 @@ public class AdminController {
     private final OfficeRepository officeRepository;
     private final DepartmentService departmentService;
     private final DepartmentRepository departmentRepository;
+    private final ProjectService projectService;
+    private final ProjectRepository projectRepository;
+
 
     @Autowired
-    public AdminController(UserService userService, UserRepository userRepository, NotificationService notificationService, OfficeService officeService, OfficeRepository officeRepository, DepartmentService departmentService, DepartmentRepository departmentRepository) {
+    public AdminController(UserService userService, UserRepository userRepository, NotificationService notificationService, OfficeService officeService, OfficeRepository officeRepository, DepartmentService departmentService, DepartmentRepository departmentRepository, ProjectService projectService, ProjectRepository projectRepository) {
         this.userService = userService;
         this.userRepository = userRepository;
         this.notificationService = notificationService;
@@ -50,6 +57,8 @@ public class AdminController {
         this.officeRepository = officeRepository;
         this.departmentService = departmentService;
         this.departmentRepository = departmentRepository;
+        this.projectService = projectService;
+        this.projectRepository = projectRepository;
     }
 
     @GetMapping
@@ -156,6 +165,31 @@ public class AdminController {
 
         Department department = departmentService.addDepartment(addDepartmentRequest);
         departmentRepository.save(department);
+
+        return new ModelAndView("redirect:/home");
+    }
+
+    @GetMapping("/add-project")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ModelAndView getAddProjectPage() {
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("add-project");
+        modelAndView.addObject("addProjectRequest", new AddProjectRequest());
+
+        log.info("Navigating to add project Page");
+        return modelAndView;
+    }
+
+    @PostMapping("/add-project")
+    public ModelAndView addProject(@Valid AddProjectRequest addProjectRequest, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return new ModelAndView("add-project");
+        }
+
+        Project project = projectService.addProject(addProjectRequest);
+        projectRepository.save(project);
 
         return new ModelAndView("redirect:/home");
     }
