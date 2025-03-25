@@ -18,7 +18,7 @@
   <main class="content">
     <h1>Add New Department</h1>
 
-    <form class="department-form" th:action="@{/admin/add-department}" th:method="POST" th:object="${addDepartmentRequest}">
+    <form class="department-form" th:action="@{/departments/add-department}" th:method="POST" th:object="${addDepartmentRequest}">
       <label for="name">Department Name:</label>
       <input type="text" id="name" th:field="*{name}" placeholder="Enter department name">
       <p class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>

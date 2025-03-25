@@ -11,4 +11,6 @@ import java.util.UUID;
 public interface OfficeRepository extends JpaRepository<Office, UUID> {
 
     Optional<Office> findByNameAndLocation(String name, String location);
+
+    Optional<Office> findById(UUID id);
 }

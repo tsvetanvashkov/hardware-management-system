@@ -18,7 +18,20 @@
   <main class="content">
     <h1>Add New User</h1>
 
-    <form class="user-form" th:action="@{/admin/add-user}" th:method="POST" th:object="${addUserRequest}">
+    <!-- Office Selection Form (GET Request to Refresh Page) -->
+    <form th:action="@{/users/add-user}" method="get">
+      <label for="office">Select Office:</label>
+      <select id="office" name="officeId" onchange="this.form.submit()">
+        <option value="">-- Select Office --</option>
+        <option th:each="office : ${offices}" th:value="${office.id}" th:text="${office.name}"
+                th:selected="${selectedOfficeId != null && office.id == selectedOfficeId}">
+        </option>
+      </select>
+      <noscript><button type="submit">Refresh</button></noscript>
+    </form>
+
+    <!-- Main User Form (POST Request to Add User) -->
+    <form class="user-form" th:action="@{/users/add-user}" th:method="POST" th:object="${addUserRequest}">
       <label for="username">Username:</label>
       <input type="text" id="username" th:field="*{username}" placeholder="Enter username">
       <p class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
@@ -33,21 +46,16 @@
 
       <label for="role">Role:</label>
       <select id="role" th:field="*{userRole}">
-        <option th:each="role : ${T(com.company.hardware_management_system.user.model.UserRole).values()}" th:value="${role}" th:text="${#strings.capitalize(#strings.toLowerCase(role))}"></option>
-      </select>
-
-      <label for="office">Office:</label>
-      <select id="office" th:field="*{office}">
-        <option value="">Select Office</option>
-        <option th:each="office : ${offices}" th:value="${office.id}" th:text="${office.name}"></option>
+        <option th:each="role : ${T(com.company.hardware_management_system.user.model.UserRole).values()}"
+                th:value="${role}" th:text="${#strings.capitalize(#strings.toLowerCase(role))}">
+        </option>
       </select>
 
       <label for="department">Department:</label>
       <select id="department" th:field="*{department}">
-        <option value="">Select Department</option>
+        <option value="">-- Select Department --</option>
         <option th:each="department : ${departments}" th:value="${department.id}" th:text="${department.name}"></option>
       </select>
-
 
       <button type="submit" class="submit-btn">Add User</button>
     </form>

@@ -43,7 +43,7 @@ public class AdminUserInitializer implements CommandLineRunner {
             userRepository.save(user);
             log.info("Default admin user created!");
         } else {
-            log.info("Admin user already exist.");
+            log.info("Admin user exist.");
         }
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @Slf4j
@@ -45,6 +46,11 @@ public class OfficeService {
     public List<Office> getAllOffices() {
 
         return officeRepository.findAll();
+    }
+
+    public Office getOfficeById(UUID officeId) {
+
+        return officeRepository.findById(officeId).orElseThrow(() -> new DomainException("Office with id [%s] does not exist.".formatted(officeId)));
     }
 
 }

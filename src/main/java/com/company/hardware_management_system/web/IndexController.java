@@ -24,7 +24,7 @@ public class IndexController {
     @GetMapping("/")
     public String getIndexPage() {
 
-        log.info("Navigating to Index Page");
+        log.info("Navigating to index page.");
         return "index";
     }
 
@@ -39,7 +39,7 @@ public class IndexController {
             modelAndView.addObject("errorMessage", "Incorrect username or password!");
         }
 
-        log.info("Navigating to Login Page");
+        log.info("Navigating to login page.");
         return modelAndView;
     }
 
@@ -54,7 +54,7 @@ public class IndexController {
         modelAndView.setViewName("home");
         modelAndView.addObject("user", user);
 
-        log.info("Navigating to Home Page");
+        log.info("Navigating to home page.");
         return modelAndView;
     }
 

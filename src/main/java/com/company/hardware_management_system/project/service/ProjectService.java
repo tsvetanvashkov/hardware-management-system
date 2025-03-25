@@ -43,7 +43,7 @@ public class ProjectService {
                 .build();
     }
 
-    public List<Project> getAllDepartments() {
+    public List<Project> getAllProjects() {
 
         return projectRepository.findAll();
     }

@@ -18,7 +18,7 @@
     <main class="content">
         <h1>Add New Office</h1>
 
-        <form class="office-form" th:action="@{/admin/add-office}" th:method="POST" th:object="${addOfficeRequest}">
+        <form class="office-form" th:action="@{/offices/add-office}" th:method="POST" th:object="${addOfficeRequest}">
             <label for="name">Office Name:</label>
             <input type="text" id="name" th:field="*{name}" placeholder="Enter office name">
             <p class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>

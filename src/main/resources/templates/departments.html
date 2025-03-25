@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Departments Management</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
+</head>
+<body>
+<header>
+    <h1>Departments Management</h1>
+</header>
+
+<div class="content">
+    <div class="add-button-container">
+        <a href="/add-department" class="add-button">Add Department</a>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Office</th>
+            <th>Projects</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="department : ${departments}">
+            <td th:text="${department.name}"></td>
+            <td th:text="${department.office.name}"></td>
+            <td>
+                <select multiple>
+                    <option th:each="project : ${allProjects}"
+                            th:value="${project.id}"
+                            th:text="${project.name}"
+                            th:selected="${department.projects.contains(project)}"></option>
+                </select>
+            </td>
+            <td>
+                <button>Edit</button>
+                <button>Delete</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

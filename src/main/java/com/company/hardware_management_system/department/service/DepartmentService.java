@@ -49,4 +49,9 @@ public class DepartmentService {
 
         return departmentRepository.findAll();
     }
+
+    public List<Department> getAllDepartmentsByOffices(List<Office> offices) {
+
+        return departmentRepository.findAllByOffices(offices).orElseThrow(() -> new DomainException("Offices does not exist.".formatted(offices.isEmpty())));
+    }
 }
