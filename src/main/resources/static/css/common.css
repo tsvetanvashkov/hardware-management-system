@@ -1,0 +1,78 @@
+/* General Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header */
+header {
+    background-color: #333;
+    color: white;
+    padding: 1rem;
+}
+
+/* Navigation */
+nav {
+    padding: 0rem 1rem; /* Consistent rem-based padding */
+    display: grid; /* Use grid instead of flex */
+    grid-template-columns: 1fr auto; /* Left part takes remaining space, right part is auto width */
+    align-items: center;
+}
+
+/* Navigation Links */
+.links {
+    display: grid; /* Using grid for layout */
+    grid-template-columns: 1fr auto; /* Left links take available space, right links are at the end */
+    width: 100%;
+    gap: 1rem; /* Adds space between columns */
+}
+
+.left-links {
+    display: flex; /* Keep flexbox for spacing inside left-links */
+    gap: 1rem; /* Space between links */
+}
+
+.right-links {
+    display: flex; /* Keep flexbox for spacing inside right-links */
+    gap: 1rem; /* Space between links */
+}
+
+/* Button Styles */
+a {
+    text-decoration: none;
+    background-color: #555;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: background 0.3s;
+    display: inline-block; /* Ensures better button-like behavior */
+}
+
+a:hover {
+    background-color: #777;
+}
+
+/* Page Layout */
+html, body {
+    min-height: 100vh; /* Avoids unwanted scroll issues */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Main Content */
+main {
+    flex: 1;
+    padding: 1rem; /* Adds some space around content */
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: white;
+    font-size: 0.75rem; /* 12px in rem */
+    text-align: center;
+    padding: 1rem; /* Matches nav/header for consistency */
+    width: 100%;
+}
+

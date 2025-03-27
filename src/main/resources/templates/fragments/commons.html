@@ -1,33 +1,29 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="head">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hardware Management System</title>
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/common.css">
 </head>
 <body>
 
 <header th:fragment="header">
-  <nav>
-    <div class="links">
-      <li th:unless="${user}">
-        <a th:href="@{/login}">Login</a>
-      </li>
-      <div th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
-        <a th:href="@{/users}">Users</a>
-        <a th:href="@{/offices}">Offices</a>
-        <a th:href="@{/departments}">Departments</a>
-        <a th:href="@{/projects}">Projects</a>
-      </div>
-      <li th:if="${user}">
-        <a th:href="@{/logout}">Logout</a>
-      </li>
+  <nav class="links">
+    <div class="left-links" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+      <a th:href="@{/users}" aria-label="Go to Users page">Users</a>
+      <a th:href="@{/offices}" aria-label="Go to Offices page">Offices</a>
+      <a th:href="@{/departments}" aria-label="Go to Departments page">Departments</a>
+      <a th:href="@{/projects}" aria-label="Go to Projects page">Projects</a>
+    </div>
+    <div class="right-links">
+      <a th:href="@{/login}" th:unless="${user}" aria-label="Login">Login</a>
+      <a th:href="@{/logout}" th:if="${user}" aria-label="Logout">Logout</a>
     </div>
   </nav>
 </header>
 
-<footer th:fragment="footer">
+<footer th:fragment="footer" class="footer">
   <p>&copy; 2025 Hardware Management System</p>
 </footer>
 

@@ -4,24 +4,14 @@
 <body>
     <header th:replace="~{fragments/commons :: header}"></header>
 
-    <div class="container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <!-- Show Buttons Only for ADMIN -->
-            <div>
-                <span>Admin</span>
-                <a th:href="@{/admin/add-user}">Add User</a>
-                <a th:href="@{/admin/add-office}">Add Office</a>
-                <a th:href="@{/admin/add-department}">Add Department</a>
-                <a th:href="@{/admin/add-project}">Add Project</a>
-            </div>
-        </aside>
+
+
 
         <!-- Main Content -->
         <main class="content">
             <h1>Home Page</h1>
         </main>
-    </div>
+
     <footer th:replace="~{fragments/commons :: footer}"></footer>
 </body>
 </html>
