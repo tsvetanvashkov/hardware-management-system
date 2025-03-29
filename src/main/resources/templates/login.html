@@ -5,17 +5,23 @@
 <body>
 <header th:replace="~{fragments/commons :: header}"></header>
 <main>
-    <form class="form-container" th:action="@{/login}" th:method="POST" th:object="${loginRequest}">
-        <label for="username">Username:</label>
-        <input id="username" placeholder="Username" th:field="*{username}" type="text">
+    <form class="form-container" th:action="@{/login}" method="POST" th:object="${loginRequest}">
+        <h2 class="form-title">Login</h2>
 
-        <label for="password">Password:</label>
-        <input id="password" placeholder="Password" th:field="*{password}" type="password">
+        <div class="form-group">
+            <label class="form-label" for="username">Username:</label>
+            <input class="form-input" id="username" type="text" th:field="*{username}">
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="password">Password:</label>
+            <input class="form-input" id="password" type="password" th:field="*{password}">
+        </div>
 
         <p class="alert-warning" th:if="${errorMessage}" th:text="${errorMessage}"></p>
-
-        <button type="submit">Login</button>
+        <button type="submit" class="btn btn-primary">Login</button>
     </form>
+
 </main>
 <footer th:replace="~{fragments/commons :: footer}"></footer>
 </body>

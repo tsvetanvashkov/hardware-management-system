@@ -2,6 +2,7 @@ package com.company.hardware_management_system.web;
 
 
 import com.company.hardware_management_system.department.service.DepartmentService;
+import com.company.hardware_management_system.exception.ConfirmPasswordException;
 import com.company.hardware_management_system.notification.service.NotificationService;
 import com.company.hardware_management_system.office.model.Office;
 import com.company.hardware_management_system.office.service.OfficeService;
@@ -10,6 +11,8 @@ import com.company.hardware_management_system.user.model.User;
 import com.company.hardware_management_system.user.repository.UserRepository;
 import com.company.hardware_management_system.user.service.UserService;
 import com.company.hardware_management_system.web.dto.AddUserRequest;
+import com.company.hardware_management_system.web.dto.ChangePasswordRequest;
+import com.company.hardware_management_system.web.dto.EditUserRequest;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +20,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -111,5 +111,70 @@ public class UserController {
         return new ModelAndView("redirect:/users");
     }
 
+    @GetMapping("/{userId}/profile")
+    public ModelAndView getProfileMenu(@AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
+
+        User user = userService.getById(authenticationMetadata.getUserId());
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("edit-profile");
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("editUser", EditUserRequest.builder()
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .profilePicture(user.getProfilePicture())
+                .build());
+        modelAndView.addObject("changePassword", new ChangePasswordRequest());
+
+        log.info("Navigating to profile page.");
+        return modelAndView;
+    }
+
+    @PatchMapping("/{userId}/profile/details")
+    public ModelAndView updateProfile(@AuthenticationPrincipal AuthenticationMetadata authenticationMetadata,
+                                          @Valid EditUserRequest editUserRequest, BindingResult bindingResult) {
+
+        User user = userService.getById(authenticationMetadata.getUserId());
+
+        if (bindingResult.hasErrors()) {
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.setViewName("edit-profile");
+            modelAndView.addObject("user", user);
+            modelAndView.addObject("editUser", editUserRequest);
+            return modelAndView;
+        }
+
+        userService.editUserDetails(user, editUserRequest);
+        log.info("Successfully edit user profile in database.");
+
+        return new ModelAndView("redirect:/home");
+    }
+
+    @PostMapping("/{userId}/profile/password")
+    public ModelAndView changePassword(@AuthenticationPrincipal AuthenticationMetadata authenticationMetadata,
+                                           @Valid ChangePasswordRequest changePasswordRequest, BindingResult bindingResult) {
+
+        User user = userService.getById(authenticationMetadata.getUserId());
+
+        if (bindingResult.hasErrors()) {
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.setViewName("edit-profile");
+            modelAndView.addObject("user", user);
+            modelAndView.addObject("changePassword", changePasswordRequest);
+            return modelAndView;
+        }
+
+        userService.changeUserPassword(user, changePasswordRequest);
+        log.info("Successfully change user password in database.");
+
+        return new ModelAndView("redirect:/home");
+    }
+
+    @ExceptionHandler(ConfirmPasswordException.class)
+    public ModelAndView handleConfirmPasswordException(ConfirmPasswordException ex) {
+        ModelAndView modelAndView = new ModelAndView("edit-profile");
+        modelAndView.addObject("passwordError", ex.getMessage());
+        return modelAndView;
+    }
 
 }

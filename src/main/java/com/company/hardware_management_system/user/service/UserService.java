@@ -1,10 +1,14 @@
 package com.company.hardware_management_system.user.service;
 
+import com.company.hardware_management_system.exception.ConfirmPasswordException;
 import com.company.hardware_management_system.exception.DomainException;
 import com.company.hardware_management_system.security.AuthenticationMetadata;
 import com.company.hardware_management_system.user.model.User;
 import com.company.hardware_management_system.user.repository.UserRepository;
 import com.company.hardware_management_system.web.dto.AddUserRequest;
+import com.company.hardware_management_system.web.dto.ChangePasswordRequest;
+import com.company.hardware_management_system.web.dto.EditUserRequest;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -87,5 +91,23 @@ public class UserService implements UserDetailsService {
         body.append("Password: %s".formatted(addUserRequest.getPassword()));
 
         return body.toString();
+    }
+
+    public void editUserDetails(User user, EditUserRequest editUserRequest) {
+
+        user.setFirstName(editUserRequest.getFirstName());
+        user.setLastName(editUserRequest.getLastName());
+        user.setProfilePicture(editUserRequest.getProfilePicture());
+
+        userRepository.save(user);
+    }
+
+    public void changeUserPassword(User user, @Valid ChangePasswordRequest changePasswordRequest) {
+
+        if (!changePasswordRequest.isPasswordConfirmed()) {
+            throw new ConfirmPasswordException("Passwords do not match");
+        }
+        user.setPassword(passwordEncoder.encode(changePasswordRequest.getNewPassword()));
+        userRepository.save(user);
     }
 }

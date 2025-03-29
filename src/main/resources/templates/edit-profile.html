@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/commons :: head}"></head>
+
+<body>
+<header th:replace="~{fragments/commons :: header}"></header>
+<main class="profile-forms-container">
+    <!-- Profile Edit Form -->
+    <form class="profile-form" th:action="@{/users/{userId}/profile/details(userId=${user.id})}" method="POST" th:object="${editUser}">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+        <h2 class="form-title">Edit Profile</h2>
+
+        <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input class="form-input" type="text" th:field="*{firstName}">
+            <div class="text-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <input class="form-input" type="text" th:field="*{lastName}">
+            <div class="text-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Profile Picture URL</label>
+            <input class="form-input" type="url" th:field="*{profilePicture}">
+            <div class="text-danger" th:if="${#fields.hasErrors('profilePicture')}" th:errors="*{profilePicture}"></div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Profile</button>
+    </form>
+
+    <!-- Password Change Form -->
+    <form th:action="@{/users/{userId}/profile/password(userId=${user.id})}"
+          th:object="${changePassword}"
+          method="POST"
+          class="profile-form">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+        <h2 class="form-title">Change Password</h2>
+
+        <div class="form-group">
+            <label class="form-label">New Password</label>
+            <input class="form-input" type="password" th:field="*{newPassword}">
+            <div class="alert-warning" th:if="${#fields.hasErrors('newPassword')}" th:errors="*{newPassword}"></div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Confirm Password</label>
+            <input class="form-input" type="password" th:field="*{confirmPassword}">
+            <div class="alert-warning" th:if="${#fields.hasErrors('confirmPassword') or passwordError != null}">
+                <span th:if="${#fields.hasErrors('confirmPassword')}"
+                      th:errors="*{confirmPassword}"></span>
+                <span th:if="${passwordError != null}" th:text="${passwordError}"></span>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-danger">Change Password</button>
+    </form>
+</main>
+<footer th:replace="~{fragments/commons :: footer}"></footer>
+</body>
+</html>

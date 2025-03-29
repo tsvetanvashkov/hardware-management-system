@@ -10,22 +10,24 @@
 <body>
 
 <header th:fragment="header">
+  <div th:text="${#authentication}"></div>
   <nav class="links">
     <div class="left-links">
-      <a aria-label="Go to index page" th:href="@{/}" th:unless="${user}">Hardware Management System</a>
-      <a aria-label="Go to Home page" th:href="@{/home}" th:if="${user}">Home</a>
+      <a aria-label="Go to index page" th:href="@{/}" th:if="${#authentication.principal == 'anonymousUser'}">Hardware Management System</a>
+      <a aria-label="Go to Home page" th:href="@{/home}" th:if="${#authentication.principal != 'anonymousUser'}">Home</a>
 
-      <div class="admin-links" th:if="${user != null and #authorization.expression('hasRole(''ADMIN'')')}">
+      <div class="admin-links" th:if="${#authentication.principal != 'anonymousUser' and #authorization.expression('hasRole(''ADMIN'')')}">
         <a aria-label="Go to Users page" th:href="@{/users}">Users</a>
         <a aria-label="Go to Offices page" th:href="@{/offices}">Offices</a>
         <a aria-label="Go to Departments page" th:href="@{/departments}">Departments</a>
         <a aria-label="Go to Projects page" th:href="@{/projects}">Projects</a>
       </div>
-
     </div>
+
     <div class="right-links">
-      <a th:href="@{/login}" th:unless="${user}" aria-label="Login">Login</a>
-      <a th:href="@{/logout}" th:if="${user}" aria-label="Logout">Logout</a>
+      <a aria-label="Login" th:href="@{/login}" th:if="${#authentication.principal == 'anonymousUser'}">Login</a>
+      <a aria-label="Profile" th:href="@{users/{userId}/profile(userId=${#authentication.principal.userId})}" th:if="${#authentication.principal != 'anonymousUser'}">Profile</a>
+      <a aria-label="Logout" th:href="@{/logout}" th:if="${#authentication.principal != 'anonymousUser'}">Logout</a>
     </div>
   </nav>
 </header>
