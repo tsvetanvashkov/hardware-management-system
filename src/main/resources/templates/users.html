@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/commons :: head}"></head>
+
 <body>
 <header th:replace="~{fragments/commons :: header}"></header>
 
-<div class="container">
-    <div class="add-button-container">
-        <a th:href="@{/users/add-user}" class="add-button">Add User</a>
-    </div>
-
     <!-- Main Content -->
     <main class="content">
+        <div class="add-button-container">
+            <a class="add-button" th:href="@{/users/add-user}">Add User</a>
+            <p th:text="${loginUser.username}"></p>
+        </div>
+
+
         <table>
             <thead>
             <tr>
@@ -80,7 +82,7 @@
             </tbody>
         </table>
     </main>
-</div>
+
 
 <footer th:replace="~{fragments/commons :: footer}"></footer>
 </body>

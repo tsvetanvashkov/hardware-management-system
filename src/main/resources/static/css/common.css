@@ -15,8 +15,8 @@ header {
 /* Navigation */
 nav {
     padding: 0rem 1rem; /* Consistent rem-based padding */
-    display: grid; /* Use grid instead of flex */
-    grid-template-columns: 1fr auto; /* Left part takes remaining space, right part is auto width */
+    display: flex; /* Use flex instead of grid */
+    justify-content: space-between; /* Keep left and right links apart */
     align-items: center;
 }
 
@@ -28,8 +28,20 @@ nav {
     gap: 1rem; /* Adds space between columns */
 }
 
+.index-link {
+    display: flex; /* Keeps index and right links on the same row */
+    align-items: center;
+    gap: 1rem; /* Adds spacing between Home and Admin links */
+}
+
 .left-links {
-    display: flex; /* Keep flexbox for spacing inside left-links */
+    display: flex; /* Keeps home and admin links on the same row */
+    align-items: center;
+    gap: 1rem; /* Adds spacing between Home and Admin links */
+}
+
+.admin-link {
+    display: flex; /* Keep flexbox for spacing inside admin-links */
     gap: 1rem; /* Space between links */
 }
 

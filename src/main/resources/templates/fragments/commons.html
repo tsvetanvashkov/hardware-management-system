@@ -5,16 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hardware Management System</title>
   <link rel="stylesheet" href="/css/common.css">
+  <link rel="stylesheet" href="/css/form.css" >
 </head>
 <body>
 
 <header th:fragment="header">
   <nav class="links">
-    <div class="left-links" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
-      <a th:href="@{/users}" aria-label="Go to Users page">Users</a>
-      <a th:href="@{/offices}" aria-label="Go to Offices page">Offices</a>
-      <a th:href="@{/departments}" aria-label="Go to Departments page">Departments</a>
-      <a th:href="@{/projects}" aria-label="Go to Projects page">Projects</a>
+    <div class="left-links">
+      <a aria-label="Go to index page" th:href="@{/}" th:unless="${user}">Hardware Management System</a>
+      <a aria-label="Go to Home page" th:href="@{/home}" th:if="${user}">Home</a>
+
+      <div class="admin-links" th:if="${user != null and #authorization.expression('hasRole(''ADMIN'')')}">
+        <a aria-label="Go to Users page" th:href="@{/users}">Users</a>
+        <a aria-label="Go to Offices page" th:href="@{/offices}">Offices</a>
+        <a aria-label="Go to Departments page" th:href="@{/departments}">Departments</a>
+        <a aria-label="Go to Projects page" th:href="@{/projects}">Projects</a>
+      </div>
+
     </div>
     <div class="right-links">
       <a th:href="@{/login}" th:unless="${user}" aria-label="Login">Login</a>

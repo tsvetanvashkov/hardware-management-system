@@ -1,15 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Offices Management</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/styles.css">
-</head>
-<body>
-<header>
-    <h1>Offices Management</h1>
-</header>
+<head th:replace="~{fragments/commons :: head}"></head>
 
-<div class="content">
+<body>
+<header th:replace="~{fragments/commons :: header}"></header>
+
+<main class="content">
     <div class="add-button-container">
         <a href="/add-office" class="add-button">Add Office</a>
     </div>
@@ -42,6 +38,6 @@
         </tr>
         </tbody>
     </table>
-</div>
+</main>
 </body>
 </html>

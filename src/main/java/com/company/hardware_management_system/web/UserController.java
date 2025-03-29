@@ -4,7 +4,6 @@ package com.company.hardware_management_system.web;
 import com.company.hardware_management_system.department.service.DepartmentService;
 import com.company.hardware_management_system.notification.service.NotificationService;
 import com.company.hardware_management_system.office.model.Office;
-import com.company.hardware_management_system.office.repository.OfficeRepository;
 import com.company.hardware_management_system.office.service.OfficeService;
 import com.company.hardware_management_system.security.AuthenticationMetadata;
 import com.company.hardware_management_system.user.model.User;
@@ -54,10 +53,12 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     public ModelAndView getAllUsers(@AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
 
+        User loginUser = userService.getById(authenticationMetadata.getUserId());
         List<User> users = userService.getAllUsers();
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("users");
+        modelAndView.addObject("loginUser", loginUser);
         modelAndView.addObject("users", users);
         modelAndView.addObject("offices", officeService.getAllOffices());
         modelAndView.addObject("departments", departmentService.getAllDepartments());
