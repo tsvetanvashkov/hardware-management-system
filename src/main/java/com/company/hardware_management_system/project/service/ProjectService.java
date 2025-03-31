@@ -31,7 +31,7 @@ public class ProjectService {
 
         Project project = projectRepository.save(initializeProject(addProjectRequest));
 
-        log.info("Successfully create new project with name [%s]".formatted(project.getName()));
+        log.info("Successfully create new project with name {}", project.getName());
 
         return project;
     }
@@ -40,6 +40,7 @@ public class ProjectService {
 
         return Project.builder()
                 .name(addProjectRequest.getName())
+                .description(addProjectRequest.getDescription())
                 .build();
     }
 

@@ -25,6 +25,8 @@ public class Project {
     @Column(nullable = false)
     private String name;
 
+    private String description;
+
     @ManyToMany(mappedBy = "projects", fetch = FetchType.EAGER)
     private List<User> users;
 

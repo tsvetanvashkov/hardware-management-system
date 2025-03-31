@@ -1,43 +1,64 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/commons :: head}"></head>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{fragments/commons :: head}">
+    <title>Office Management</title>
+</head>
 
 <body>
 <header th:replace="~{fragments/commons :: header}"></header>
 
-<main class="content">
-    <div class="add-button-container">
-        <a href="/add-office" class="add-button">Add Office</a>
+<main class="container">
+    <div class="page-header">
+        <h2 class="page-title">Offices</h2>
+        <div class="header-actions">
+            <a href="/add-office" class="btn btn-primary btn-icon">
+                <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
+                    <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
+                </svg>
+                <span>Add Office</span>
+            </a>
+        </div>
     </div>
 
-    <table>
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Location</th>
-            <th>Departments</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="office : ${offices}">
-            <td th:text="${office.name}"></td>
-            <td th:text="${office.location}"></td>
-            <td>
-                <select multiple>
-                    <option th:each="department : ${allDepartments}"
-                            th:value="${department.id}"
-                            th:text="${department.name}"
-                            th:selected="${office.departments.contains(department)}"></option>
-                </select>
-            </td>
-            <td>
-                <button>Update</button>
-                <button>Delete</button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="table-wrapper">
+        <table class="data-table">
+            <caption class="sr-only">List of offices with their locations and departments</caption>
+            <thead>
+            <tr>
+                <th scope="col">Office Name</th>
+                <th scope="col">Location</th>
+                <th scope="col">Departments</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="office : ${offices}">
+                <td data-label="Office Name" th:text="${office.name}"></td>
+                <td data-label="Location" th:text="${office.location}"></td>
+                <td data-label="Departments">
+                    <div class="department-list">
+                                <span th:each="dept : ${office.departments}"
+                                      class="department-tag"
+                                      th:text="${dept.name}"></span>
+                        <span th:if="${office.departments.isEmpty()}"
+                              class="text-muted">No departments</span>
+                    </div>
+                </td>
+                <td data-label="Actions">
+                    <a th:href="@{/offices/{id}/edit(id=${office.id})}"
+                       class="btn btn-edit btn-icon">
+                        <svg class="icon" viewBox="0 0 24 24" width="14" height="14">
+                            <path fill="currentColor" d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                        </svg>
+                        <span>Edit</span>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </main>
+
+<footer th:replace="~{fragments/commons :: footer}"></footer>
 </body>
 </html>

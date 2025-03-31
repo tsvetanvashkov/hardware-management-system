@@ -1,88 +1,64 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/commons :: head}"></head>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{fragments/commons :: head}">
+    <title>User Management</title>
+</head>
 
 <body>
 <header th:replace="~{fragments/commons :: header}"></header>
 
-    <!-- Main Content -->
-    <main class="content">
-        <div class="add-button-container">
-            <a class="add-button" th:href="@{/users/add-user}">Add User</a>
-            <p th:text="${loginUser.username}"></p>
+<main class="container">
+    <div class="page-header">
+        <h2 class="page-title">Users</h2>
+        <div class="header-actions">
+            <a th:href="@{/users/add-user}" class="btn btn-primary btn-icon">
+                <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
+                    <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
+                </svg>
+                <span>Add User</span>
+            </a>
         </div>
+    </div>
 
-
-        <table>
+    <div class="table-wrapper">
+        <table class="data-table">
+            <caption class="sr-only">List of users with their roles and assignments</caption>
             <thead>
             <tr>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Active</th>
-                <th>Office</th>
-                <th>Department</th>
+                <th scope="col">Username</th>
+                <th scope="col">Email</th>
+                <th scope="col">Role</th>
+                <th scope="col">Status</th>
+                <th scope="col">Office</th>
+                <th scope="col">Department</th>
+                <th scope="col">Actions</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="user : ${users}">
-                <td th:text="${user.username}"></td>
-                <td th:text="${user.email}"></td>
-
-                <!-- Role Selection -->
-                <td>
-                    <form th:action="@{/users/update-role}" method="post">
-                        <input type="hidden" name="userId" th:value="${user.id}" />
-                        <select name="role" onchange="this.form.submit()">
-                            <option th:each="role : ${T(com.company.hardware_management_system.user.model.UserRole).values()}"
-                                    th:value="${role}"
-                                    th:text="${role}"
-                                    th:selected="${user.userRole == role}">
-                            </option>
-                        </select>
-                    </form>
+                <td data-label="Username" th:text="${user.username}"></td>
+                <td data-label="Email" th:text="${user.email}"></td>
+                <td data-label="Role" th:text="${user.userRole}"></td>
+                <td data-label="Status">
+                            <span th:text="${user.isActive ? 'Active' : 'Inactive'}"
+                                  th:class="${user.isActive ? 'status-active' : 'status-inactive'}"></span>
                 </td>
-
-                <!-- Active Status -->
-                <td>
-                    <form th:action="@{/users/update-status}" method="post">
-                        <input type="hidden" name="userId" th:value="${user.id}" />
-                        <input type="checkbox" name="isActive" th:checked="${user.isActive}" onchange="this.form.submit()" />
-                    </form>
-                </td>
-
-                <!-- Office Selection -->
-                <td>
-                    <form th:action="@{/users/update-office}" method="post">
-                        <input type="hidden" name="userId" th:value="${user.id}" />
-                        <select name="officeId" onchange="this.form.submit()">
-                            <option th:each="office : ${offices}"
-                                    th:value="${office.id}"
-                                    th:text="${office.name}"
-                                    th:selected="${user.office != null && user.office.id == office.id}">
-                            </option>
-                        </select>
-                    </form>
-                </td>
-
-                <!-- Department Selection -->
-                <td>
-                    <form th:action="@{/users/update-department}" method="post">
-                        <input type="hidden" name="userId" th:value="${user.id}" />
-                        <select name="departmentId" onchange="this.form.submit()">
-                            <option th:each="department : ${departments}"
-                                    th:value="${department.id}"
-                                    th:text="${department.name}"
-                                    th:selected="${user.department != null && user.department.id == department.id}">
-                            </option>
-                        </select>
-                    </form>
+                <td data-label="Office" th:text="${user.office?.name ?: 'None'}"></td>
+                <td data-label="Department" th:text="${user.department?.name ?: 'None'}"></td>
+                <td data-label="Actions">
+                    <a th:href="@{/users/{id}/edit(id=${user.id})}"
+                       class="btn btn-edit btn-icon">
+                        <svg class="icon" viewBox="0 0 24 24" width="14" height="14">
+                            <path fill="currentColor" d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                        </svg>
+                        <span>Edit</span>
+                    </a>
                 </td>
             </tr>
             </tbody>
         </table>
-    </main>
-
+    </div>
+</main>
 
 <footer th:replace="~{fragments/commons :: footer}"></footer>
 </body>

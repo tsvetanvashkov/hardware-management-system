@@ -8,4 +8,6 @@ public class AddProjectRequest {
 
     @NotBlank(message = "Project name can not be empty.")
     private String name;
+
+    private String description;
 }

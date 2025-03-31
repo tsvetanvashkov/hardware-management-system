@@ -1,0 +1,263 @@
+:root {
+    --bg-primary: #f8f9fa;
+    --bg-secondary: #e9ecef;
+    --bg-hover: rgba(0, 0, 0, 0.02);
+    --border-color: #dee2e6;
+    --border-light: #e9ecef;
+    --text-primary: #212529;
+    --text-muted: #6c757d;
+    --primary: #0d6efd;
+    --primary-dark: #0b5ed7;
+    --edit-bg: transparent;
+    --edit-text: #6c757d;
+    --edit-hover: #e9ecef;
+    --tag-bg: #e9ecef;
+    --tag-text: #495057;
+}
+
+/* ============ BASE STYLES ============ */
+body {
+    background-color: #f5f5f5;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 1.5rem auto;
+    padding: 0 1.5rem;
+}
+
+/* ============ PAGE HEADER ============ */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    gap: 1rem;
+    flex-wrap: nowrap;
+}
+
+.page-title {
+    margin: 0;
+    font-size: 1.75rem;
+    color: var(--text-primary);
+    white-space: nowrap;
+}
+
+.header-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+/* ============ TABLE STYLES ============ */
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.data-table {
+    width: 100%;
+    min-width: 800px;
+    border-collapse: collapse;
+}
+
+.data-table th {
+    background: var(--bg-secondary);
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.data-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+}
+
+.data-table tr:last-child td {
+    border-bottom: none;
+}
+
+.data-table tr:hover {
+    background: var(--bg-hover);
+}
+
+/* ============ BUTTON STYLES ============ */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: 1px solid transparent;
+}
+
+.btn-icon {
+    padding: 0.5rem 0.75rem;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+.btn-edit {
+    background: var(--edit-bg);
+    color: var(--edit-text);
+    border: 1px solid var(--border-color);
+}
+
+.btn-edit:hover {
+    background: var(--edit-hover);
+    border-color: var(--border-color);
+}
+
+/* ============ DEPARTMENT STYLES ============ */
+.department-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.department-tag {
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+}
+
+/* ============ OFFICE STYLES ============ */
+.office-tag {
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+}
+
+.office-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+/* ============ DESCRIPTION STYLES ============ */
+.description-cell {
+    max-width: 400px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.description-cell:hover {
+    white-space: normal;
+    overflow: visible;
+    position: relative;
+    z-index: 1;
+    background: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* ============ STATUS STYLES ============ */
+.status-active {
+    color: #2e7d32;
+    background-color: #e8f5e9;
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.875rem;
+    display: inline-block;
+}
+
+.status-inactive {
+    color: #c62828;
+    background-color: #ffebee;
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.875rem;
+    display: inline-block;
+}
+
+/* ============ UTILITY CLASSES ============ */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+.text-muted {
+    color: var(--text-muted);
+}
+
+.icon {
+    flex-shrink: 0;
+}
+
+/* ============ RESPONSIVE ADJUSTMENTS ============ */
+@media (max-width: 992px) {
+    .container {
+        padding: 0 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-header {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .data-table {
+        display: block;
+    }
+
+    .data-table thead {
+        display: none;
+    }
+
+    .data-table tr {
+        display: block;
+        padding: 0.75rem;
+        border-bottom: 2px solid var(--border-color);
+    }
+
+    .data-table td {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid var(--border-light);
+    }
+
+    .data-table td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        margin-right: 1rem;
+    }
+
+    .department-list {
+        justify-content: flex-end;
+    }
+
+    .office-list {
+        justify-content: flex-end;
+    }
+}

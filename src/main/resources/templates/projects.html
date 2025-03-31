@@ -1,43 +1,54 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/commons :: head}"></head>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{fragments/commons :: head}">
+    <title>Project Management</title>
+</head>
 
 <body>
 <header th:replace="~{fragments/commons :: header}"></header>
 
-<main class="content">
-    <div class="add-button-container">
-        <a href="/add-project" class="add-button">Add Project</a>
+<main class="container">
+    <div class="page-header">
+        <h2 class="page-title">Projects</h2>
+        <div class="header-actions">
+            <a href="/add-project" class="btn btn-primary btn-icon">
+                <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
+                    <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
+                </svg>
+                <span>Add Project</span>
+            </a>
+        </div>
     </div>
 
-    <table>
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Assigned Departments</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="project : ${projects}">
-            <td th:text="${project.name}"></td>
-            <td th:text="${project.description}"></td>
-            <td>
-                <select multiple>
-                    <option th:each="department : ${allDepartments}"
-                            th:value="${department.id}"
-                            th:text="${department.name}"
-                            th:selected="${project.departments.contains(department)}"></option>
-                </select>
-            </td>
-            <td>
-                <button>Edit</button>
-                <button>Delete</button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="table-wrapper">
+        <table class="data-table">
+            <caption class="sr-only">List of projects with their descriptions</caption>
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="project : ${projects}">
+                <td data-label="Name" th:text="${project.name}"></td>
+                <td data-label="Description" class="description-cell" th:text="${project.description}"></td>
+                <td data-label="Actions">
+                    <a th:href="@{/projects/{id}/edit(id=${project.id})}"
+                       class="btn btn-edit btn-icon">
+                        <svg class="icon" viewBox="0 0 24 24" width="14" height="14">
+                            <path fill="currentColor" d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                        </svg>
+                        <span>Edit</span>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </main>
+
+<footer th:replace="~{fragments/commons :: footer}"></footer>
 </body>
 </html>

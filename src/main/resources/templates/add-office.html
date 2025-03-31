@@ -1,33 +1,28 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/commons :: head}"></head>
-<!-- Link to external CSS -->
-<link rel="stylesheet" th:href="@{/css/style.css}">
 <body>
 <header th:replace="~{fragments/commons :: header}"></header>
 
-<div class="container">
-    <!-- Sidebar -->
-    <aside class="sidebar">
-        <a href="/home">Home</a>
-        <a href="/offices">All Offices</a>
-        <a href="/logout" class="logout-btn">Logout</a>
-    </aside>
-
     <!-- Main Content -->
-    <main class="content">
-        <h1>Add New Office</h1>
+    <main>
+        <h2 class="form-title">Add New Office</h2>
 
-        <form class="office-form" th:action="@{/offices/add-office}" th:method="POST" th:object="${addOfficeRequest}">
-            <label for="name">Office Name:</label>
-            <input type="text" id="name" th:field="*{name}" placeholder="Enter office name">
-            <p class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+        <form class="form-container" th:action="@{/offices/add-office}" th:method="POST" th:object="${addOfficeRequest}">
 
-            <label for="location">Location:</label>
-            <input type="text" id="location" th:field="*{location}" placeholder="Enter office location">
-            <p class="error" th:if="${#fields.hasErrors('location')}" th:errors="*{location}"></p>
+            <div class="form-group">
+                <label class="form-label">Office Name:</label>
+                <input class="form-input" type="text" th:field="*{name}" placeholder="Enter office name">
+                <p class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+            </div>
 
-            <button type="submit" class="submit-btn">Register Office</button>
+            <div class="form-group">
+                <label class="form-label">Location:</label>
+                <input class="form-input" type="text" th:field="*{location}" placeholder="Enter office location">
+                <p class="error" th:if="${#fields.hasErrors('location')}" th:errors="*{location}"></p>
+            </div>
+
+            <button class="btn btn-submit" type="submit">Register Office</button>
         </form>
     </main>
 </div>

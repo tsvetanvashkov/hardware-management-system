@@ -131,23 +131,25 @@ public class UserController {
     }
 
     @PatchMapping("/{userId}/profile/details")
-    public ModelAndView updateProfile(@AuthenticationPrincipal AuthenticationMetadata authenticationMetadata,
-                                          @Valid EditUserRequest editUserRequest, BindingResult bindingResult) {
+    public ModelAndView updateProfile(
+            @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata,
+            @Valid @ModelAttribute("editUser") EditUserRequest editUserRequest,
+            BindingResult bindingResult) {
 
         User user = userService.getById(authenticationMetadata.getUserId());
 
         if (bindingResult.hasErrors()) {
-            ModelAndView modelAndView = new ModelAndView();
-            modelAndView.setViewName("edit-profile");
-            modelAndView.addObject("user", user);
-            modelAndView.addObject("editUser", editUserRequest);
-            return modelAndView;
+            return prepareProfileView(user,
+                    editUserRequest, new ChangePasswordRequest(),
+                    null, null);
         }
 
         userService.editUserDetails(user, editUserRequest);
-        log.info("Successfully edit user profile in database.");
+        log.info("Successfully edited user profile in database.");
 
-        return new ModelAndView("redirect:/home");
+        return prepareProfileView(user,
+                editUserRequest, new ChangePasswordRequest(),
+                "Profile updated successfully!",null);
     }
 
     @PostMapping("/{userId}/profile/password")
@@ -156,18 +158,51 @@ public class UserController {
 
         User user = userService.getById(authenticationMetadata.getUserId());
 
+        if (!changePasswordRequest.isPasswordConfirmed()) {
+            bindingResult.rejectValue("confirmPassword", "match", "Passwords must match");
+        }
+
         if (bindingResult.hasErrors()) {
-            ModelAndView modelAndView = new ModelAndView();
-            modelAndView.setViewName("edit-profile");
-            modelAndView.addObject("user", user);
-            modelAndView.addObject("changePassword", changePasswordRequest);
+            ModelAndView modelAndView = prepareProfileView(user,
+                    new EditUserRequest(), changePasswordRequest,
+                    null, null);
+            modelAndView.addObject(BindingResult.MODEL_KEY_PREFIX + "changePassword", bindingResult);
             return modelAndView;
         }
 
-        userService.changeUserPassword(user, changePasswordRequest);
-        log.info("Successfully change user password in database.");
+        try {
+            userService.changeUserPassword(user, changePasswordRequest);
+            log.info("Password changed successfully for user ID: {}", user.getId());
 
-        return new ModelAndView("redirect:/home");
+            return prepareProfileView(user,
+                    new EditUserRequest(), new ChangePasswordRequest(),
+                    null, "Password changed successfully!");
+        } catch (ConfirmPasswordException e) {
+            ModelAndView modelAndView = prepareProfileView(user,
+                    new EditUserRequest(), changePasswordRequest,
+                    null,null);
+            modelAndView.addObject("passwordError", e.getMessage());
+            return modelAndView;
+        }
+    }
+
+    private ModelAndView prepareProfileView(User user,
+                                            EditUserRequest editRequest,
+                                            ChangePasswordRequest passwordRequest,
+                                            String profileSuccess,
+                                            String passwordSuccess) {
+
+        ModelAndView modelAndView = new ModelAndView("edit-profile");
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("editUser", editRequest);
+        modelAndView.addObject("changePassword", passwordRequest);
+        if (profileSuccess != null) {
+            modelAndView.addObject("profileSuccess", profileSuccess);
+        }
+        if (passwordSuccess != null) {
+            modelAndView.addObject("passwordSuccess", passwordSuccess);
+        }
+        return modelAndView;
     }
 
     @ExceptionHandler(ConfirmPasswordException.class)

@@ -1,66 +1,70 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/commons :: head}"></head>
-<!-- Link to external CSS -->
-<link rel="stylesheet" th:href="@{/css/style.css}">
 <body>
 <header th:replace="~{fragments/commons :: header}"></header>
 
-<div class="container">
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <a href="/home">Home</a>
-    <a href="/users">All Users</a>
-    <a href="/logout" class="logout-btn">Logout</a>
-  </aside>
-
-  <!-- Main Content -->
-  <main class="content">
-    <h1>Add New User</h1>
+  <main>
+    <h2 class="form-title">Add New User</h2>
 
     <!-- Office Selection Form (GET Request to Refresh Page) -->
-    <form th:action="@{/users/add-user}" method="get">
-      <label for="office">Select Office:</label>
-      <select id="office" name="officeId" onchange="this.form.submit()">
-        <option value="">-- Select Office --</option>
-        <option th:each="office : ${offices}" th:value="${office.id}" th:text="${office.name}"
+    <form class="form-container" th:action="@{/users/add-user}" method="get">
+      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+      <div class="form-group">
+        <label class="form-label">Select Office:</label>
+        <select id="office" name="officeId" onchange="this.form.submit()">
+          <option value="">Select Office</option>
+          <option th:each="office : ${offices}" th:value="${office.id}" th:text="${office.name}"
                 th:selected="${selectedOfficeId != null && office.id == selectedOfficeId}">
-        </option>
-      </select>
-      <noscript><button type="submit">Refresh</button></noscript>
+          </option>
+        </select>
+        <noscript><button type="submit">Refresh</button></noscript>
+      </div>
     </form>
 
     <!-- Main User Form (POST Request to Add User) -->
-    <form class="user-form" th:action="@{/users/add-user}" th:method="POST" th:object="${addUserRequest}">
-      <label for="username">Username:</label>
-      <input type="text" id="username" th:field="*{username}" placeholder="Enter username">
-      <p class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+    <form class="form-container" th:action="@{/users/add-user}" th:method="POST" th:object="${addUserRequest}">
+      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 
-      <label for="password">Password:</label>
-      <input type="password" id="password" th:field="*{password}" placeholder="Enter password">
-      <p class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+      <div class="form-group">
+        <label class="form-label">Username:</label>
+        <input class="form-input" type="text" th:field="*{username}" placeholder="Enter username">
+        <p class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+      </div>
 
-      <label for="email">Email:</label>
-      <input type="email" id="email" th:field="*{email}" placeholder="Enter email">
-      <p class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+      <div class="form-group">
+        <label class="form-label">Password:</label>
+        <input class="form-input" type="password" th:field="*{password}" placeholder="Enter password">
+        <p class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+      </div>
 
-      <label for="role">Role:</label>
-      <select id="role" th:field="*{userRole}">
-        <option th:each="role : ${T(com.company.hardware_management_system.user.model.UserRole).values()}"
+      <div class="form-group">
+        <label class="form-label">Email:</label>
+        <input class="form-input" type="email" th:field="*{email}" placeholder="Enter email">
+        <p class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Role:</label>
+        <select id="role" th:field="*{userRole}">
+          <option th:each="role : ${T(com.company.hardware_management_system.user.model.UserRole).values()}"
                 th:value="${role}" th:text="${#strings.capitalize(#strings.toLowerCase(role))}">
-        </option>
-      </select>
+          </option>
+        </select>
+      </div>
 
-      <label for="department">Department:</label>
-      <select id="department" th:field="*{department}">
-        <option value="">-- Select Department --</option>
-        <option th:each="department : ${departments}" th:value="${department.id}" th:text="${department.name}"></option>
-      </select>
+      <div class="form-group">
+        <label class="form-label">Department:</label>
+        <select id="department" th:field="*{department}">
+          <option value="">Select Department</option>
+          <option th:each="department : ${departments}" th:value="${department.id}" th:text="${department.name}"></option>
+        </select>
+      </div>
 
-      <button type="submit" class="submit-btn">Add User</button>
+      <button class="btn btn-submit" type="submit">Add User</button>
     </form>
   </main>
-</div>
 
 <footer th:replace="~{fragments/commons :: footer}"></footer>
 </body>
