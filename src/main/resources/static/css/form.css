@@ -42,6 +42,46 @@
     box-shadow: 0 0 0 2px rgba(85,85,85,0.2);
 }
 
+.form-textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 1rem;
+    resize: vertical; /* Allows vertical resizing */
+    overflow-y: auto; /* Adds scrollbar when needed */
+}
+
+.form-textarea:focus {
+    border-color: #555;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(85, 85, 85, 0.2);
+}
+
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #f5f5f5;
+    padding: 8px 12px;
+    border-radius: 4px;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+}
 /* ============ BUTTON STYLES ============ */
 .btn {
     width: 100%;
@@ -70,6 +110,39 @@
 
 .btn-danger:hover {
     background-color: #c9302c;
+}
+
+.btn-cancel {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.btn-cancel:hover {
+    background-color: #e0e0e0;
+}
+/* ============ OFFICE_SELECT FORMS LAYOUT ============ */
+.office-select-container {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.office-select {
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    min-width: 200px;
+}
+
+.office-select.error {
+    border-color: #dc3545;
+    background-color: #fff5f5;
+}
+
+.error-message {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
 }
 
 /* ============ PROFILE FORMS LAYOUT ============ */

@@ -4,9 +4,15 @@ import com.company.hardware_management_system.department.model.Department;
 import com.company.hardware_management_system.office.model.Office;
 import com.company.hardware_management_system.user.model.UserRole;
 import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class AddUserRequest {
 
     @NotBlank(message = "Username can not be empty.")
@@ -27,9 +33,6 @@ public class AddUserRequest {
 
     @NotNull
     private UserRole userRole;
-
-    @NotNull
-    private Office office;
 
     @NotNull
     private Department department;

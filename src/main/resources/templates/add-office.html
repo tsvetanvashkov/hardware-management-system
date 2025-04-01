@@ -14,11 +14,11 @@
                 <label class="form-label">Office Name:</label>
                 <input class="form-input" type="text" th:field="*{name}" placeholder="Enter office name">
                 <p class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
-            </div>
+            </div>z
 
             <div class="form-group">
                 <label class="form-label">Location:</label>
-                <input class="form-input" type="text" th:field="*{location}" placeholder="Enter office location">
+                <textarea class="form-textarea" th:field="*{location}" placeholder="Enter office location" rows="5"></textarea>
                 <p class="error" th:if="${#fields.hasErrors('location')}" th:errors="*{location}"></p>
             </div>
 

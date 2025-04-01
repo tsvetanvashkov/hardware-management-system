@@ -2,12 +2,13 @@ package com.company.hardware_management_system.user.service;
 
 import com.company.hardware_management_system.exception.ConfirmPasswordException;
 import com.company.hardware_management_system.exception.DomainException;
+import com.company.hardware_management_system.office.model.Office;
 import com.company.hardware_management_system.security.AuthenticationMetadata;
 import com.company.hardware_management_system.user.model.User;
 import com.company.hardware_management_system.user.repository.UserRepository;
 import com.company.hardware_management_system.web.dto.AddUserRequest;
 import com.company.hardware_management_system.web.dto.ChangePasswordRequest;
-import com.company.hardware_management_system.web.dto.EditUserRequest;
+import com.company.hardware_management_system.web.dto.EditProfileRequest;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -41,21 +42,21 @@ public class UserService implements UserDetailsService {
         return new AuthenticationMetadata(user.getId(), username, user.getPassword(), user.getUserRole(), user.isActive());
     }
 
-    public User addUser(AddUserRequest addUserRequest) {
+    public User addUser(AddUserRequest addUserRequest, Office office) {
 
         Optional<User> optionUser = userRepository.findByUsername(addUserRequest.getUsername());
         if (optionUser.isPresent()) {
             throw new DomainException("Username [%s] already exist.".formatted(addUserRequest.getUsername()));
         }
 
-        User user = userRepository.save(initializeUser(addUserRequest));
+        User user = userRepository.save(initializeUser(addUserRequest, office));
 
         log.info("Successfully create new user account for username [%s] and id [%s]".formatted(user.getUsername(), user.getId()));
 
         return user;
     }
 
-    private User initializeUser(AddUserRequest addUserRequest) {
+    private User initializeUser(AddUserRequest addUserRequest, Office office) {
 
         return User.builder()
                 .username(addUserRequest.getUsername())
@@ -63,7 +64,7 @@ public class UserService implements UserDetailsService {
                 .email(addUserRequest.getEmail())
                 .userRole(addUserRequest.getUserRole())
                 .isActive(true)
-                .office(addUserRequest.getOffice())
+                .office(office)
                 .department(addUserRequest.getDepartment())
                 .createdOn(LocalDateTime.now())
                 .build();
@@ -93,11 +94,11 @@ public class UserService implements UserDetailsService {
         return body.toString();
     }
 
-    public void editUserDetails(User user, EditUserRequest editUserRequest) {
+    public void editUserDetails(User user, EditProfileRequest editProfileRequest) {
 
-        user.setFirstName(editUserRequest.getFirstName());
-        user.setLastName(editUserRequest.getLastName());
-        user.setProfilePicture(editUserRequest.getProfilePicture());
+        user.setFirstName(editProfileRequest.getFirstName());
+        user.setLastName(editProfileRequest.getLastName());
+        user.setProfilePicture(editProfileRequest.getProfilePicture());
 
         userRepository.save(user);
     }

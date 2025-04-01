@@ -11,7 +11,7 @@
     <div class="page-header">
         <h2 class="page-title">Departments</h2>
         <div class="header-actions">
-            <a href="/add-department" class="btn btn-primary btn-icon">
+            <a th:href="@{/departments/add-department}" class="btn btn-primary btn-icon">
                 <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
                     <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
                 </svg>
@@ -34,9 +34,9 @@
             <tr th:each="department : ${departments}">
                 <td data-label="Name" th:text="${department.name}"></td>
                 <td data-label="Offices">
-                    <div class="office-list">
+                    <div class="cell-list">
                                 <span th:each="office : ${department.offices}"
-                                      class="office-tag"
+                                      class="cell-tag"
                                       th:text="${office.name}"></span>
                         <span th:if="${department.offices.isEmpty()}"
                               class="text-muted">No offices</span>

@@ -11,7 +11,7 @@
     <div class="page-header">
         <h2 class="page-title">Projects</h2>
         <div class="header-actions">
-            <a href="/add-project" class="btn btn-primary btn-icon">
+            <a th:href="@{/projects/add-project}" class="btn btn-primary btn-icon">
                 <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
                     <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
                 </svg>
@@ -27,13 +27,26 @@
             <tr>
                 <th scope="col">Name</th>
                 <th scope="col">Description</th>
+                <th scope="col">Users</th>
                 <th scope="col">Actions</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="project : ${projects}">
                 <td data-label="Name" th:text="${project.name}"></td>
-                <td data-label="Description" class="description-cell" th:text="${project.description}"></td>
+                <td data-label="Description" class="textarea-cell">
+                    <div class="textarea-content" th:text="${project.description}"></div>
+                    <div class="textarea-tooltip" th:text="${project.description}"></div>
+                </td>
+                <td data-label="Users">
+                    <div class="cell-list">
+                                <span th:each="user : ${project.users}"
+                                      class="cell-tag"
+                                      th:text="${user.username}"></span>
+                        <span th:if="${project.users.isEmpty()}"
+                              class="text-muted">No users</span>
+                    </div>
+                </td>
                 <td data-label="Actions">
                     <a th:href="@{/projects/{id}/edit(id=${project.id})}"
                        class="btn btn-edit btn-icon">

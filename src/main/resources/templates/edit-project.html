@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/commons :: head}">
+    <title>Edit Project</title>
+</head>
+<body>
+<header th:replace="~{fragments/commons :: header}"></header>
+
+<main>
+    <h2 class="form-title">Edit Project</h2>
+
+    <form class="form-container" th:action="@{/projects/{id}/edit(id=${project.id})}" method="POST" th:object="${editProjectRequest}">
+
+        <div class="form-group">
+            <label class="form-label">Project Name:</label>
+            <input class="form-input" type="text" th:field="*{name}" placeholder="Enter project name">
+            <p class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Description:</label>
+            <textarea class="form-textarea" th:field="*{description}" placeholder="Enter project description" rows="5"></textarea>
+            <p class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Assign Users:</label>
+            <div class="checkbox-group">
+                <div th:each="user : ${allUsers}" class="checkbox-item">
+                    <input type="checkbox"
+                           th:id="'user-' + ${user.id}"
+                           th:name="userIds"
+                           th:value="${user.id}"
+                           th:checked="${project.users.contains(user)}">
+                    <label th:for="'user-' + ${user.id}" th:text="${user.username}"></label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button class="btn btn-submit" type="submit">Save Changes</button>
+            <a th:href="@{/projects}" class="btn btn-cancel">Cancel</a>
+        </div>
+    </form>
+</main>
+
+<footer th:replace="~{fragments/commons :: footer}"></footer>
+</body>
+</html>

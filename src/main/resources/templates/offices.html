@@ -11,7 +11,7 @@
     <div class="page-header">
         <h2 class="page-title">Offices</h2>
         <div class="header-actions">
-            <a href="/add-office" class="btn btn-primary btn-icon">
+            <a th:href="@{/offices/add-office}" class="btn btn-primary btn-icon">
                 <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
                     <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
                 </svg>
@@ -34,11 +34,14 @@
             <tbody>
             <tr th:each="office : ${offices}">
                 <td data-label="Office Name" th:text="${office.name}"></td>
-                <td data-label="Location" th:text="${office.location}"></td>
+                <td data-label="Location" class="textarea-cell">
+                    <div class="textarea-content" th:text="${office.location}"></div>
+                    <div class="textarea-tooltip" th:text="${office.location}"></div>
+                </td>
                 <td data-label="Departments">
-                    <div class="department-list">
+                    <div class="cell-list">
                                 <span th:each="dept : ${office.departments}"
-                                      class="department-tag"
+                                      class="cell-tag"
                                       th:text="${dept.name}"></span>
                         <span th:if="${office.departments.isEmpty()}"
                               class="text-muted">No departments</span>

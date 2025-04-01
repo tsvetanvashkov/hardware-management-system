@@ -1,6 +1,7 @@
 package com.company.hardware_management_system.project.service;
 
 import com.company.hardware_management_system.exception.DomainException;
+import com.company.hardware_management_system.office.model.Office;
 import com.company.hardware_management_system.project.model.Project;
 import com.company.hardware_management_system.project.repository.ProjectRepository;
 import com.company.hardware_management_system.web.dto.AddProjectRequest;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @Slf4j
@@ -47,5 +49,10 @@ public class ProjectService {
     public List<Project> getAllProjects() {
 
         return projectRepository.findAll();
+    }
+
+    public Project getById(UUID projectId) {
+
+        return projectRepository.findById(projectId).orElseThrow(() -> new DomainException("Project with id [%s] does not exist.".formatted(projectId)));
     }
 }

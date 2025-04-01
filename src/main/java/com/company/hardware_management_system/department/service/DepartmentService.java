@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @Slf4j
@@ -45,6 +46,11 @@ public class DepartmentService {
                 .build();
     }
 
+    public Department getDepartmentById(UUID departmentId) {
+
+        return departmentRepository.findById(departmentId).orElseThrow(() -> new DomainException("Office with id %s do not exist.".formatted(departmentId)));
+    }
+
     public List<Department> getAllDepartments() {
 
         return departmentRepository.findAll();
@@ -54,4 +60,5 @@ public class DepartmentService {
 
         return departmentRepository.findAllByOffices(offices).orElseThrow(() -> new DomainException("Offices does not exist.".formatted(offices.isEmpty())));
     }
+
 }

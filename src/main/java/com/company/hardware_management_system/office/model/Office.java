@@ -4,16 +4,14 @@ import com.company.hardware_management_system.department.model.Department;
 import com.company.hardware_management_system.hardware.model.Hardware;
 import com.company.hardware_management_system.user.model.User;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -39,4 +37,24 @@ public class Office {
     @OneToMany(mappedBy = "office", fetch = FetchType.EAGER)
     private List<Hardware> hardware;
 
+    public void setDepartments(List<Department> departments) {
+        // First, remove this office from all currently assigned departments
+        if (this.departments != null) {
+            for (Department department : this.departments) {
+                department.getOffices().remove(this);
+            }
+        }
+
+        // Then set the new departments
+        this.departments = departments;
+
+        // Add this office to all new departments
+        if (departments != null) {
+            for (Department department : departments) {
+                if (!department.getOffices().contains(this)) {
+                    department.getOffices().add(this);
+                }
+            }
+        }
+    }
 }

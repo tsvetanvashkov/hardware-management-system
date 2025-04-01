@@ -11,12 +11,23 @@
     <div class="page-header">
         <h2 class="page-title">Users</h2>
         <div class="header-actions">
-            <a th:href="@{/users/add-user}" class="btn btn-primary btn-icon">
-                <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
-                    <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
-                </svg>
-                <span>Add User</span>
-            </a>
+            <form th:action="@{/users/validate-office}" method="get" class="office-select-container">
+                <select name="officeId" class="office-select" th:classappend="${officeError} ? 'error'">
+                    <option value="">-- Select Office --</option>
+                    <option th:each="office : ${offices}"
+                            th:value="${office.id}"
+                            th:text="${office.name}"></option>
+                </select>
+                <button type="submit" class="btn btn-primary btn-icon">
+                    <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
+                        <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
+                    </svg>
+                    <span>Add User</span>
+                </button>
+                <div th:if="${officeError}" class="error-message">
+                    Please select an office first
+                </div>
+            </form>
         </div>
     </div>
 
@@ -31,6 +42,7 @@
                 <th scope="col">Status</th>
                 <th scope="col">Office</th>
                 <th scope="col">Department</th>
+                <th scope="col">Projects</th>
                 <th scope="col">Actions</th>
             </tr>
             </thead>
@@ -45,6 +57,15 @@
                 </td>
                 <td data-label="Office" th:text="${user.office?.name ?: 'None'}"></td>
                 <td data-label="Department" th:text="${user.department?.name ?: 'None'}"></td>
+                <td data-label="Projects">
+                    <div class="cell-list">
+                                <span th:each="project : ${user.projects}"
+                                      class="cell-tag"
+                                      th:text="${project.name}"></span>
+                        <span th:if="${user.projects.isEmpty()}"
+                              class="text-muted">No projects</span>
+                    </div>
+                </td>
                 <td data-label="Actions">
                     <a th:href="@{/users/{id}/edit(id=${user.id})}"
                        class="btn btn-edit btn-icon">

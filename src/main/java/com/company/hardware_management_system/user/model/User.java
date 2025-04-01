@@ -64,4 +64,24 @@ public class User {
     @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
     private List<Hardware> hardware;
 
+    public void setProjects(List<Project> projects) {
+        // First, remove this user from all currently assigned projects
+        if (this.projects != null) {
+            for (Project project : this.projects) {
+                project.getUsers().remove(this);
+            }
+        }
+
+        // Then set the new projects
+        this.projects = projects;
+
+        // Add this user to all new projects
+        if (projects != null) {
+            for (Project project : projects) {
+                if (!project.getUsers().contains(this)) {
+                    project.getUsers().add(this);
+                }
+            }
+        }
+    }
 }
