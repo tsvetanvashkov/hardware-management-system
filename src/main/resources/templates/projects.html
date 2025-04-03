@@ -43,7 +43,7 @@
                                 <span th:each="user : ${project.users}"
                                       class="cell-tag"
                                       th:text="${user.username}"></span>
-                        <span th:if="${project.users.isEmpty()}"
+                        <span th:if="${project.users != null && project.users.isEmpty()}"
                               class="text-muted">No users</span>
                     </div>
                 </td>

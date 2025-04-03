@@ -19,15 +19,9 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-//                .sessionManagement(session -> session
-//                        .sessionCreationPolicy(SessionCreationPolicy.ALWAYS) // Force new session
-//                        .invalidSessionUrl("/login?invalid") // Redirect if session is invalid
-//                        .maximumSessions(1)
-//                        .maxSessionsPreventsLogin(false)
-//                        .expiredUrl("/login?expired")
-//                )
                 .authorizeHttpRequests(matchers -> matchers
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                        .requestMatchers("/projects", "/offices", "/users", "/departments").hasRole("ADMIN")
                         .requestMatchers("/").permitAll()
                         .anyRequest().authenticated()
                 )

@@ -10,6 +10,7 @@
     <h2 class="form-title">Edit Department</h2>
 
     <form class="form-container" th:action="@{/departments/{id}/edit(id=${department.id})}" method="POST" th:object="${editDepartmentRequest}">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 
         <div class="form-group">
             <label class="form-label">Department Name:</label>

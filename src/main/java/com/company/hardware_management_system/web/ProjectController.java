@@ -19,10 +19,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/projects")
@@ -86,15 +84,16 @@ public class ProjectController {
         Project project = projectService.getById(projectId);
         List<User> allUsers = userService.getAllUsers();
 
+        AddProjectRequest editProjectRequest = AddProjectRequest.builder()
+                .name(project.getName())
+                .description(project.getDescription())
+                .build();
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("edit-project");
         modelAndView.addObject("project", project);
         modelAndView.addObject("allUsers", allUsers);
-        modelAndView.addObject("editProjectRequest",
-                AddProjectRequest.builder()
-                        .name(project.getName())
-                        .description(project.getDescription())
-                        .build());
+        modelAndView.addObject("editProjectRequest", editProjectRequest);
 
         return modelAndView;
     }
@@ -103,11 +102,12 @@ public class ProjectController {
     @PreAuthorize("hasRole('ADMIN')")
     public ModelAndView updateProject(
             @PathVariable UUID projectId,
-            @Valid AddProjectRequest addProjectRequest,
+            @Valid @ModelAttribute("editProjectRequest") AddProjectRequest addProjectRequest,
             BindingResult bindingResult,
             @RequestParam(required = false) List<UUID> userIds) {
 
         Project project = projectService.getById(projectId);
+
         if (bindingResult.hasErrors()) {
             List<User> allUsers = userService.getAllUsers();
 
@@ -124,10 +124,10 @@ public class ProjectController {
 
         // Update users
         if (userIds != null && !userIds.isEmpty()) {
-            List<User> users = new ArrayList<>();
-            for (UUID userId : userIds) {
-                users.add(userService.getById(userId));
-            }
+            List<User> users = userIds.stream()
+                    .map(userService::getById)
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toList());
             project.setUsers(users);
         } else {
             project.setUsers(Collections.emptyList());

@@ -10,6 +10,7 @@
     <h2 class="form-title">Add Project</h2>
 
     <form class="form-container" th:action="@{/projects/add-project}" th:method="POST" th:object="${addProjectRequest}">
+      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 
       <div class="form-group">
         <label class="form-label">Project Name:</label>

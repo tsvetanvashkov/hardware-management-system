@@ -6,6 +6,7 @@ import com.company.hardware_management_system.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,17 +30,17 @@ public class Office {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "office_department")
-    private List<Department> departments;
+    private List<Department> departments = new ArrayList<>();
 
     @OneToMany(mappedBy = "office", fetch = FetchType.EAGER)
-    private List<User> users;
+    private List<User> users = new ArrayList<>();
 
     @OneToMany(mappedBy = "office", fetch = FetchType.EAGER)
     private List<Hardware> hardware;
 
     public void setDepartments(List<Department> departments) {
         // First, remove this office from all currently assigned departments
-        if (this.departments != null) {
+        if (this.departments != null || !this.departments.isEmpty()) {
             for (Department department : this.departments) {
                 department.getOffices().remove(this);
             }

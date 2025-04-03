@@ -5,6 +5,7 @@ import com.company.hardware_management_system.user.model.User;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,14 +27,14 @@ public class Project {
     private String description;
 
     @ManyToMany(mappedBy = "projects", fetch = FetchType.EAGER)
-    private List<User> users;
+    private List<User> users = new ArrayList<>();
 
     @OneToMany(mappedBy = "project", fetch = FetchType.EAGER)
-    private List<Hardware> hardware;
+    private List<Hardware> hardware = new ArrayList<>();
 
     public void setUsers(List<User> users) {
         // First, remove this project from all currently assigned users
-        if (this.users != null) {
+        if (this.users != null || !this.users.isEmpty()) {
             for (User user : this.users) {
                 user.getProjects().remove(this);
             }
