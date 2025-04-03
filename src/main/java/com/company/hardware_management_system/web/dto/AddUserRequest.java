@@ -9,6 +9,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -35,6 +37,9 @@ public class AddUserRequest {
     private UserRole userRole;
 
     @NotNull
+    private UUID officeId;
+
+    @NotNull(message = "Department must be selected")
     private Department department;
 
 }

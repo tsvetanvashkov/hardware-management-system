@@ -92,26 +92,15 @@ public class UserController {
 
     @GetMapping("/add-user")
     @PreAuthorize("hasRole('ADMIN')")
-    public ModelAndView getAddUserPage(@RequestParam(value = "officeId", required = false) UUID officeId,
-                                       @RequestParam(value = "officeError", required = false) boolean officeError) {
+    public ModelAndView getAddUserPage(@RequestParam(value = "officeId", required = false) UUID officeId) {
+
+        Office office = officeService.getOfficeById(officeId);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("add-user");
         modelAndView.addObject("addUserRequest", new AddUserRequest());
-        modelAndView.addObject("offices", officeService.getAllOffices());
-        modelAndView.addObject("officeError", officeError);
-
-        // If an office is selected, filter departments
-        if (officeId != null) {
-            Office office = officeService.getOfficeById(officeId);
-            List<Office> offices = new ArrayList<>();
-            offices.add(office);
-
-            modelAndView.addObject("departments", departmentService.getAllDepartmentsByOffices(offices));
-            modelAndView.addObject("selectedOfficeId", officeId);
-        } else {
-            modelAndView.addObject("departments", departmentService.getAllDepartments());
-        }
+        modelAndView.addObject("departments", departmentService.getAllDepartmentsByOffice(office));
+        modelAndView.addObject("officeId", officeId);
 
         log.info("Navigating to add user page.");
         return modelAndView;
@@ -233,12 +222,7 @@ public class UserController {
         return modelAndView;
     }
 
-    @ExceptionHandler(ConfirmPasswordException.class)
-    public ModelAndView handleConfirmPasswordException(ConfirmPasswordException ex) {
-        ModelAndView modelAndView = new ModelAndView("edit-profile");
-        modelAndView.addObject("passwordError", ex.getMessage());
-        return modelAndView;
-    }
+
 
     @GetMapping("/{userId}/edit")
     @PreAuthorize("hasRole('ADMIN')")
@@ -246,23 +230,20 @@ public class UserController {
             @PathVariable("userId") UUID userId,
             @RequestParam(required = false) UUID officeId) {
 
+        UUID selectedOfficeId = null;
         User user = userService.getById(userId);
         List<Project> allProjects = projectService.getAllProjects();
         List<Office> allOffices = officeService.getAllOffices();
 
-        // Determine departments to show
         List<Department> departments;
-        List<Office> offices = new ArrayList<>();
         if (officeId != null) {
-            // If office selected in form, use that
-            offices.add(officeService.getOfficeById(officeId));
-            departments = departmentService.getAllDepartmentsByOffices(offices);
+            Office office = officeService.getOfficeById(officeId);
+            departments = departmentService.getAllDepartmentsByOffice(office);
+            selectedOfficeId = officeId;
         } else if (user.getOffice() != null) {
-            // Otherwise use user's current office
-            offices.add(user.getOffice());
-            departments = departmentService.getAllDepartmentsByOffices(offices);
+            departments = departmentService.getAllDepartmentsByOffice(user.getOffice());
+            selectedOfficeId = user.getOffice().getId();
         } else {
-            // No office selected or assigned
             departments = departmentService.getAllDepartments();
         }
 
@@ -271,7 +252,7 @@ public class UserController {
         modelAndView.addObject("allProjects", allProjects);
         modelAndView.addObject("allOffices", allOffices);
         modelAndView.addObject("allDepartments", departments);
-        modelAndView.addObject("selectedOfficeId", offices != null ? offices.getFirst().getId() : null);
+        modelAndView.addObject("selectedOfficeId", selectedOfficeId);
 
         // Initialize form with user data
         EditUserRequest editUserRequest = EditUserRequest.builder()
@@ -279,7 +260,7 @@ public class UserController {
                 .email(user.getEmail())
                 .userRole(user.getUserRole())
                 .isActive(user.isActive())
-                .officeId(offices != null ? offices.getFirst().getId() : null)
+                .officeId(selectedOfficeId)
                 .departmentId(user.getDepartment() != null ? user.getDepartment().getId() : null)
                 .build();
 

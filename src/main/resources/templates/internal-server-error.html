@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internal Server Error</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+        .error-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 72px;
+            margin-bottom: 20px;
+            color: #dc3545;
+        }
+        p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        .error-details {
+            background-color: #f1f1f1;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            font-family: monospace;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="error-container">
+    <h1>500</h1>
+    <h2>Internal Server Error</h2>
+    <p>We're sorry, something went wrong on our end.</p>
+
+    <div class="error-details" th:if="${errorMessage}">
+        Error: <span th:text="${errorMessage}"></span>
+    </div>
+
+    <p>Our team has been notified and we're working to fix the issue.</p>
+    <p>Please try again later or
+        <a th:href="@{/}" th:if="${#authentication.principal == 'anonymousUser'}">return to the homepage</a>
+        <a th:href="@{/home}" th:unless="${#authentication.principal == 'anonymousUser'}">return to the homepage</a>
+        .</p>
+</div>
+</body>
+</html>

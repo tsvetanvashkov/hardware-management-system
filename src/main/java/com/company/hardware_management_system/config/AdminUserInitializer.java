@@ -28,7 +28,7 @@ public class AdminUserInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        Optional<User> adminUser = userRepository.findByUserRole(UserRole.ADMIN);
+        Optional<User> adminUser = userRepository.findByUserRoleAndUsername(UserRole.ADMIN, "admin");
 
         if (adminUser.isEmpty()) {
             User user = User.builder()

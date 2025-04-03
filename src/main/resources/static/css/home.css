@@ -1,0 +1,125 @@
+/* General styling */
+:root {
+    --gray-900: #111827; /* Darkest - for text */
+    --gray-700: #374151; /* Dark - for accents */
+    --gray-500: #6b7280; /* Medium - for secondary text */
+    --gray-300: #d1d5db; /* Light - for borders */
+    --gray-200: #e5e7eb; /* Lighter - for hover states */
+    --gray-100: #f3f4f6; /* Lightest - for backgrounds */
+    --gray-50: #f9fafb;  /* Extra light - for cards */
+
+    --edit-accent: #3b82f6; /* Bright blue */
+    --edit-accent-hover: #1527b6; /* Slightly darker blue */
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--gray-100);
+}
+
+.main-container {
+    display: flex;
+    min-height: calc(100vh - 120px);
+}
+
+/* User sidebar styling */
+.user-sidebar {
+    width: 250px;
+    background-color: var(--gray-300);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+}
+
+.user-profile {
+    display: flex;
+    background-color: var(--gray-300);
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.user-profile > div {
+    display: flex;
+    align-items: baseline; /* Align text baselines */
+    margin: 0.5rem 0; /* Reduced vertical spacing */
+    width: 100%;
+}
+
+.user-profile h5 {
+    color: var(--gray-700);
+    font-size: 0.875rem;
+    font-weight: 600;
+    min-width: 90px; /* Fixed width for alignment */
+    margin: 0 1rem 0 0; /* Right margin only */
+    text-align: right;
+    flex-shrink: 0;
+}
+
+/* Value styling */
+.user-profile h3,
+.user-profile .user-info {
+    flex-grow: 1;
+    margin: 0;
+    text-align: left;
+}
+
+/* Profile picture container remains centered */
+.user-profile > div:first-child {
+    display: block;
+    text-align: center;
+}
+
+.profile-picture {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border: 3px solid var(--gray-500);
+    margin-bottom: 15px;
+}
+
+.username {
+    margin: 10px 0;
+    color: var(--gray-900);
+}
+
+.user-info {
+    margin: 8px 0;
+    color: var(--gray-700);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.user-info i {
+    color: var(--gray-500);
+}
+
+.btn-edit {
+    margin-top: 15px;
+    background-color: var(--edit-accent);
+    border: 1px solid var(--edit-accent);
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.2s ease;
+}
+
+.btn-edit:hover {
+    background-color: var(--edit-accent-hover);
+}
+
+/* Main content styling */
+.content {
+    flex: 1;
+    padding: 20px;
+    background-color: var(--gray-200);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    margin: 20px;
+    border-radius: 5px;
+}

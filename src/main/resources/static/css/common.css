@@ -1,4 +1,14 @@
 /* General Reset */
+:root {
+    /* New grayscale variables */
+    --gray-900: #111827; /* Darkest (header/footer) */
+    --gray-700: #374151; /* Dark (primary buttons) */
+    --gray-500: #6b7280; /* Medium (button hover) */
+    --gray-300: #d1d5db; /* Light (borders) */
+    --gray-100: #f3f4f6; /* Lightest (backgrounds) */
+    --gray-accent: #9ca3af; /* Accent gray */
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -7,7 +17,7 @@
 
 /* Header */
 header {
-    background-color: #333;
+    background-color: var(--gray-900); /* Was #333 */
     color: white;
     padding: 1rem;
 }
@@ -29,6 +39,8 @@ nav {
 }
 
 .index-link {
+    background-color: var(--gray-accent); /* Light gray accent */
+    color: var(--gray-900);
     display: flex; /* Keeps index and right links on the same row */
     align-items: center;
     gap: 1rem; /* Adds spacing between Home and Admin links */
@@ -53,7 +65,7 @@ nav {
 /* Button Styles */
 a {
     text-decoration: none;
-    background-color: #555;
+    background-color: var(--gray-700); /* Was #555 */
     color: white;
     padding: 0.5rem 1rem;
     border-radius: 5px;
@@ -62,7 +74,7 @@ a {
 }
 
 a:hover {
-    background-color: #777;
+    background-color: var(--gray-500);
 }
 
 /* Page Layout */
@@ -74,13 +86,14 @@ html, body {
 
 /* Main Content */
 main {
+    background-color: var(--gray-100);
     flex: 1;
     padding: 1rem; /* Adds some space around content */
 }
 
 /* Footer */
 footer {
-    background-color: #333;
+    background-color: var(--gray-900);
     color: white;
     font-size: 0.75rem; /* 12px in rem */
     text-align: center;

@@ -14,5 +14,5 @@ public interface DepartmentRepository extends JpaRepository<Department, UUID> {
 
     Optional<Department> findByName(String name);
 
-    Optional<List<Department>> findAllByOffices(List<Office> offices);
+    Optional<List<Department>> findAllByOfficesContaining(Office offices);
 }

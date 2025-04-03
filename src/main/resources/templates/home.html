@@ -1,19 +1,62 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/commons :: head}"></head>
+<link rel="stylesheet" href="/css/home.css" >
 
 <body>
-    <header th:replace="~{fragments/commons :: header}"></header>
+<header th:replace="~{fragments/commons :: header}"></header>
 
+<div class="main-container">
+    <!-- Left Sidebar for User Info -->
+    <aside class="user-sidebar">
+        <div class="user-profile">
+            <!-- Profile Picture -->
 
+            <img th:if="${user.profilePicture != null && !user.profilePicture.isEmpty()}" th:src="@{${user.profilePicture}}"
+                 alt="Profile Picture" class="rounded-circle profile-picture">
 
+            <img th:unless="${user.profilePicture != null && !user.profilePicture.isEmpty()}" th:src="@{/images/Default-Profile.png}"
+                 alt="Default Profile Picture" class="rounded-circle profile-picture">
 
-        <!-- Main Content -->
-        <main class="content">
-            <h1>Home Page</h1>
-            <p th:text="${user.username}"></p>
-        </main>
+            <!-- Username -->
+            <div>
+                <h5>Username:</h5>
+                <h3 th:text="${user.username}" class="username">Username</h3>
+            </div>
+            <!-- Office -->
+            <div>
+                <h5>Office:</h5>
+                <div class="user-info" th:if="${user.office != null}">
+                    <i class="bi bi-building"></i>
+                    <span th:text="${user.office.name}">Office Name</span>
+                </div>
+            </div>
+            <!-- Department -->
+            <div>
+                <h5>Department:</h5>
+                <div class="user-info" th:if="${user.department != null}">
+                    <i class="bi bi-people-fill"></i>
+                    <span th:text="${user.department.name}">Department Name</span>
+                </div>
+            </div>
+            <a th:href="@{/users/{userId}/profile(id=${user.id})}"
+               class="btn btn-edit btn-icon">
+                <svg class="icon" viewBox="0 0 24 24" width="14" height="14">
+                    <path fill="currentColor" d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                </svg>
+                <span>Edit</span>
+            </a>
+        </div>
+    </aside>
 
-    <footer th:replace="~{fragments/commons :: footer}"></footer>
+    <!-- Main Content -->
+    <main class="content">
+        <!-- Your main content goes here -->
+        <h2>Welcome to your dashboard</h2>
+
+    </main>
+</div>
+
+<footer th:replace="~{fragments/commons :: footer}"></footer>
 </body>
 </html>

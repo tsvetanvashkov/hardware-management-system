@@ -11,7 +11,7 @@
 <body>
 
 <header th:fragment="header">
-  <div th:text="${#authentication}"></div>
+<!--  <div th:text="${#authentication}"></div>-->
   <nav class="links">
     <div class="left-links">
       <a aria-label="Go to index page" th:href="@{/}" th:if="${#authentication.principal == 'anonymousUser'}">Hardware Management System</a>
@@ -27,7 +27,6 @@
 
     <div class="right-links">
       <a aria-label="Login" th:href="@{/login}" th:if="${#authentication.principal == 'anonymousUser'}">Login</a>
-      <a aria-label="Profile" th:href="@{users/{userId}/profile(userId=${#authentication.principal.userId})}" th:if="${#authentication.principal != 'anonymousUser'}">Profile</a>
       <a aria-label="Logout" th:href="@{/logout}" th:if="${#authentication.principal != 'anonymousUser'}">Logout</a>
     </div>
   </nav>
